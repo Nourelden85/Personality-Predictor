@@ -1,34 +1,52 @@
 import pandas as pd
+import numpy as np
+import os
 from sklearn.feature_selection import mutual_info_classif
 
-df = pd.read_csv("../data/raw/16P.csv" , encoding="latin1")
-unwanted_cols = ["Response Id"]
+base_path = os.path.dirname(os.path.abspath(__file__))
+file_path = os.path.join(base_path, "..", "data", "raw", "16P.csv")
 
-X_raw = df.drop(columns=unwanted_cols)
+try:
+    df = pd.read_csv(file_path, encoding="latin1")
+    print("File loaded successfully!")
+except FileNotFoundError:
+    print(f"Path error: {file_path}")
+    exit()
 
 personalities_df = pd.DataFrame({
-    "Is_Extrovert": df["Personality"].map(lambda x: 1 if x[0] == 'E' else 0),
-    "Is_Sensor": df["Personality"].map(lambda x: 1 if x[1] == 'S' else 0),
-    "Is_Thinker": df["Personality"].map(lambda x: 1 if x[2] == 'T' else 0),
-    "Is_Judger": df["Personality"].map(lambda x: 1 if x[3] == 'J' else 0)
+    "Is_Extrovert": df["Personality"].str[0].map({'E': 1, 'I': 0}),
+    "Is_Sensor":    df["Personality"].str[1].map({'S': 1, 'N': 0}),
+    "Is_Thinker":   df["Personality"].str[2].map({'T': 1, 'F': 0}),
+    "Is_Judger":    df["Personality"].str[3].map({'J': 1, 'P': 0})
 })
 
-print("Calculating feature importance (Mutual Information)... This may take a minute.")
-traits = personalities_df.columns
-mi_results = pd.DataFrame(index=X_raw.columns)
 
-for trait in traits:
-    scores = mutual_info_classif(X_raw, personalities_df[trait], discrete_features=False, random_state=42)
+X_for_mi = df.select_dtypes(include=[np.number])
+X_for_mi = X_for_mi.drop(columns=["Response Id"])
+
+print("Calculating importance for 40 questions... please wait.")
+mi_results = pd.DataFrame(index=X_for_mi.columns)
+
+for trait in personalities_df.columns:
+    scores = mutual_info_classif(X_for_mi, personalities_df[trait], discrete_features=False, random_state=42)
     mi_results[trait] = scores
 
-mi_results["Average_Score"] = mi_results.mean(axis=1)
-top_40_list = mi_results.sort_values(by="Average_Score", ascending=False).head(40).index.tolist()
+mi_results['Average_Score'] = mi_results.mean(axis=1)
+top_40_questions = mi_results.sort_values(by='Average_Score', ascending=False).head(40).index.tolist()
 
-final_df = pd.concat([X_raw[top_40_list + ["Personality"]], personalities_df], axis=1)
 
-final_df.to_csv("cleaned_personality_data_top40.csv", index=False)
+final_df = pd.concat([
+    df[['Personality']],      # العمود الأصلي (ENFP, etc.)
+    df[top_40_questions],     # الـ 40 سؤال المختارين
+    personalities_df          # الـ 4 أعمدة الـ Binary
+], axis=1)
 
-print("\nDone! ✅")
-print(f"Original columns: {df.shape[1]}")
-print(f"Cleaned Questions: {len(top_40_list)}")
-print("Saved to: 'cleaned_personality_data_top40.csv'")
+output_path = os.path.join(base_path, "..", "data", "cleaned", "cleaned_top40.csv")
+
+os.makedirs(os.path.dirname(output_path), exist_ok=True)
+
+final_df.to_csv(output_path, index=False)
+
+print(f"\nDone!")
+print(f"Final file contains: 1 (Personality) + 40 (Questions) + 4 (Binary Traits) = {final_df.shape[1]} columns.")
+print(f"Saved to: {output_path}")
