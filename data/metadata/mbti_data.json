@@ -1,0 +1,308 @@
+{
+  "mbti_database": {
+    "INTJ": {
+      "title": "The Architect",
+      "ratio": "2.1%",
+      "description": "Strategic thinkers with a plan for everything. They are independent, analytical, and possess a strong drive to implement their ideas.",
+      "famous_people": [
+        {"name": "Elon Musk",
+         "image_path": "/assets/images/celebs/intj_musk.jpg",
+         "bio": "A relentless visionary pushing the boundaries of humanity through aerospace and electric vehicles. He is known for his bold strategic bets and a drive to solve complex global challenges through first-principles thinking."},
+        {"name": "Isaac Newton",
+         "image_path": "/assets/images/celebs/intj_newton.jpg",
+         "bio": "One of the most influential scientists in history, who laid the foundations of classical mechanics and calculus. His analytical mind sought to decode the fundamental laws that govern the universe."},
+        {"name": "Nikola Tesla",
+         "image_path": "/assets/images/celebs/intj_tesla.jpg",
+         "bio": "A brilliant inventor and futurist whose pioneering work in alternating current power systems changed the world. He was a master of mental simulation, designing complex machines entirely within his imagination."},
+        {"name": "Mark Zuckerberg",
+         "image_path": "/assets/images/celebs/intj_zuckerberg.jpg",
+         "bio": "A strategic tech entrepreneur who built a global digital infrastructure that redefined human connection. He is characterized by a disciplined focus on long-term systems and data-driven decision making."}
+      ]
+    },
+    "INTP": {
+      "title": "The Logician",
+      "ratio": "3.3%",
+      "description": "Innovative inventors with an unquenchable thirst for knowledge. They love logical analysis and patterns.",
+      "famous_people": [
+        {"name": "Albert Einstein",
+         "image_path": "/assets/images/celebs/intp_einstein.jpg",
+         "bio": "A world-renowned theoretical physicist whose groundbreaking theories of relativity transformed our understanding of space, time, and gravity. He was driven by a childlike sense of wonder and a brilliant analytical mind."},
+        {"name": "Bill Gates",
+         "image_path": "/assets/images/celebs/intp_gates.jpg",
+         "bio": "A legendary tech pioneer and philanthropist who built a software empire through sheer logic and strategic focus. He is known for his deep-thinking approach and his commitment to solving the world's most complex problems."},
+        {"name": "Marie Curie",
+         "image_path": "/assets/images/celebs/intp_curie.jpg",
+         "bio": "A trailblazing scientist and the first person to win two Nobel Prizes. Her relentless pursuit of knowledge in radioactivity, often in solitude, remains a testament to her quiet determination and intellectual depth."},
+        {"name": "Ahmed Zewail",
+         "image_path": "/assets/images/celebs/intp_zewail.jpg",
+         "bio": "An Egyptian Nobel Prize-winning scientist known as the 'father of femtochemistry'. His pioneering work in capturing chemical reactions at the unimaginable speed of femtoseconds was born from a brilliant mind dedicated to seeing the unseen."}
+      ]
+    },
+    "ENTJ": {
+      "title": "The Commander",
+      "ratio": "1.8%",
+      "description": "Bold, imaginative and strong-willed leaders, always finding a way – or making one.",
+      "famous_people": [
+        {"name": "Steve Jobs",
+         "image_path": "/assets/images/celebs/entj_jobs.jpg",
+         "bio": "A visionary entrepreneur and co-founder of Apple Inc. who revolutionized multiple industries through his relentless pursuit of innovation, perfection, and world-changing design."},
+        {"name": "Gordon Ramsay",
+         "image_path": "/assets/images/celebs/entj_ramsay.jpg",
+         "bio": "A world-renowned chef and media mogul known for his uncompromising standards, commanding presence, and the ability to transform struggling businesses into high-performance successes."},
+        {"name": "Margaret Thatcher",
+         "image_path": "/assets/images/celebs/entj_thatcher.jpg",
+         "bio": "The first female Prime Minister of the UK, known as the 'Iron Lady' for her unwavering leadership style, decisive economic reforms, and formidable political presence."},
+        {"name": "Napoleon Bonaparte",
+         "image_path": "/assets/images/celebs/entj_napoleon.jpg",
+         "bio": "A legendary military commander and French emperor who reshaped European history through masterstroke strategies, administrative brilliance, and an indomitable will to lead."}
+      ]
+    },
+    "ENTP": {
+      "title": "The Debater",
+      "ratio": "3.2%",
+      "description": "Smart and curious thinkers who cannot resist an intellectual challenge.",
+      "famous_people": [
+        {"name": "Thomas Edison",
+         "image_path": "/assets/images/celebs/entp_edison.jpg",
+         "bio": "A prolific inventor who transformed modern life with the light bulb and phonograph. He was a master of relentless experimentation, famously viewing every failure as a necessary step toward discovery."},
+        {"name": "Leonardo da Vinci",
+         "image_path": "/assets/images/celebs/entp_davinci.jpg",
+         "bio": "The ultimate Renaissance polymath whose genius spanned art, anatomy, and engineering. His boundless curiosity and visionary sketches anticipated inventions centuries before they became reality."},
+        {"name": "Benjamin Franklin",
+         "image_path": "/assets/images/celebs/entp_franklin.jpg",
+         "bio": "A brilliant Founding Father and polymath who balanced high-stakes diplomacy with scientific inquiry. He was a quintessential tinkerer, known for his wit and world-changing discoveries in electricity."},
+        {"name": "Walt Disney",
+         "image_path": "/assets/images/celebs/entp_disney.jpg",
+         "bio": "A revolutionary visionary who merged storytelling with cutting-edge technology. He defied industry norms to build a global empire of imagination, forever changing the landscape of entertainment."}
+      ]
+    },
+    "INFJ": {
+      "title": "The Advocate",
+      "ratio": "1.5%",
+      "description": "Quiet and mystical, yet very inspiring and tireless idealists.",
+      "famous_people": [
+        {"name": "Nelson Mandela",
+         "image_path": "/assets/images/celebs/infj_mandela.jpg",
+         "bio": "A global symbol of peace and resilience who led the struggle against apartheid. His life was defined by an unwavering commitment to justice, reconciliation, and the visionary leadership required to unite a divided nation."},
+        {"name": "Fyodor Dostoevsky",
+         "image_path": "/assets/images/celebs/infj_dostoevsky.jpg",
+         "bio": "A master of psychological literature who delved into the profound complexities of faith, morality, and the human psyche. His works remain timeless explorations of the internal struggles that define our existence."},
+        {"name": "Martin Luther King",
+         "image_path": "/assets/images/celebs/infj_mlk.jpg",
+         "bio": "A pivotal leader of the civil rights movement who moved millions with his dream of equality. He combined moral courage with powerful eloquence to advocate for non-violent social change and human dignity."},
+        {"name": "Marie Kondo",
+         "image_path": "/assets/images/celebs/infj_kondo.jpg",
+         "bio": "A mindfulness-centered organizing expert who transformed how the world views their belongings. She focuses on the spiritual connection between mental clarity and our physical environment, seeking to inspire joy through order."}
+      ]
+    },
+    "INFP": {
+      "title": "The Mediator",
+      "ratio": "4.4%",
+      "description": "Poetic, kind and altruistic people, always eager to help a good cause.",
+      "famous_people": [
+        {"name": "William Shakespeare",
+         "image_path": "/assets/images/celebs/infp_shakespeare.jpg",
+         "bio": "History's preeminent dramatist and poet, whose works provide an unparalleled mirror to the human soul. He mastered the art of capturing the rawest emotions and the most complex moral dilemmas in literary history."},
+        {"name": "J.K. Rowling",
+         "image_path": "/assets/images/celebs/infp_rowling.jpg",
+         "bio": "A literary phenomenon who transformed a personal struggle into a world of magic that redefined a generation. Her storytelling is driven by a rich inner imagination and a deep belief in the power of courage and empathy."},
+        {"name": "Johnny Depp",
+         "image_path": "/assets/images/celebs/infp_depp.jpg",
+         "bio": "A uniquely sensitive actor celebrated for his ability to breathe life into eccentric and misunderstood characters. He prioritizes artistic integrity and emotional truth over mainstream conventions."},
+        {"name": "Princess Diana",
+         "image_path": "/assets/images/celebs/infp_diana.jpg",
+         "bio": "A legendary humanitarian figure who used her global platform to shine a light on the marginalized. Her legacy is defined by a profound capacity for compassion and a courageous heart that led with vulnerability."}
+      ]
+    },
+    "ENFJ": {
+      "title": "The Protagonist",
+      "ratio": "2.5%",
+      "description": "Charismatic and inspiring leaders, able to mesmerize their listeners.",
+      "famous_people": [
+        {"name": "Barack Obama",
+         "image_path": "/assets/images/celebs/enfj_obama.jpg",
+         "bio": "The 44th U.S. President, renowned for his powerful oratory and his ability to inspire hope and unity through a vision of collective progress and social change."},
+        {"name": "Maya Angelou",
+         "image_path": "/assets/images/celebs/enfj_maya.jpg",
+         "bio": "A celebrated poet and civil rights activist who moved the world with her lyrical wisdom, resilience, and her profound ability to empower others through storytelling."},
+        {"name": "Neil deGrasse Tyson",
+         "image_path": "/assets/images/celebs/enfj_neil.jpg",
+         "bio": "An astrophysicist and exceptional communicator who bridges the gap between complex science and the public, inspiring curiosity about the cosmos with infectious enthusiasm."},
+        {"name": "Jennifer Lawrence",
+         "image_path": "/assets/images/celebs/enfj_lawrence.jpg",
+         "bio": "An Academy Award-winning actress known for her authentic personality and commanding screen presence. She uses her influence to advocate for equality and social causes."}
+      ]
+    },
+    "ENFP": {
+      "title": "The Campaigner",
+      "ratio": "8.1%",
+      "description": "Enthusiastic, creative and sociable free spirits, who can always find a reason to smile.",
+      "famous_people": [
+        {"name": "Robin Williams",
+         "image_path": "/assets/images/celebs/enfp_williams.jpg",
+         "bio": "A legendary comedic genius and actor who captivated the world with his unmatched improvisational skills, boundless energy, and his profound ability to blend humor with deep human emotion."},
+        {"name": "Will Smith",
+         "image_path": "/assets/images/celebs/enfp_smith.jpg",
+         "bio": "A multi-talented actor and producer known for his infectious charisma and relentless work ethic. He is a master of reinventing himself and inspiring others through his journey of personal growth."},
+        {"name": "Quentin Tarantino",
+         "image_path": "/assets/images/celebs/enfp_tarantino.jpg",
+         "bio": "An auteur filmmaker celebrated for his bold, non-linear storytelling and his passionate, eclectic knowledge of cinema. He thrives on breaking artistic boundaries and creating vibrant, unconventional worlds."},
+        {"name": "Walt Whitman",
+         "image_path": "/assets/images/celebs/enfp_whitman.jpg",
+         "bio": "One of the most influential poets in history, known for his celebration of democracy, nature, and the human spirit. His free-verse style reflects the true ENFP soul—unconstrained, visionary, and deeply connected to life."}
+      ]
+    },
+    "ISTJ": {
+      "title": "The Logistician",
+      "ratio": "11.6%",
+      "description": "Practical and fact-minded individuals, whose reliability cannot be doubted.",
+      "famous_people": [
+        {"name": "Queen Elizabeth II",
+         "image_path": "/assets/images/celebs/istj_queen.jpg",
+         "bio": "The longest-reigning monarch in British history, who exemplified a life of unwavering duty, stoic resilience, and a profound commitment to tradition and public service."},
+        {"name": "Warren Buffett",
+         "image_path": "/assets/images/celebs/istj_buffett.jpg",
+         "bio": "One of the most successful investors of all time, known for his patient, disciplined approach and a philosophy of long-term value built on facts, logic, and integrity."},
+        {"name": "Jeff Bezos",
+         "image_path": "/assets/images/celebs/istj_bezos.jpg",
+         "bio": "The founder of Amazon who built a global empire through a relentless focus on operational efficiency, data-driven decisions, and the systematic scaling of complex infrastructures."},
+        {"name": "George Washington",
+         "image_path": "/assets/images/celebs/istj_washington.jpg",
+         "bio": "The first U.S. President and a foundational military leader, remembered for his disciplined character, his sense of civic duty, and his role in establishing the enduring structures of governance."}
+      ]
+    },
+    "ISFJ": {
+      "title": "The Defender",
+      "ratio": "13.8%",
+      "description": "Very dedicated and warm protectors, always ready to defend their loved ones.",
+      "famous_people": [
+        {"name": "Mother Teresa",
+         "image_path": "/assets/images/celebs/isfj_teresa.jpg",
+         "bio": "A legendary humanitarian who devoted her life to caring for the poor and marginalized. Her legacy is defined by selfless service, deep compassion, and an unwavering commitment to human dignity."},
+        {"name": "Beyoncé",
+         "image_path": "/assets/images/celebs/isfj_beyonce.jpg",
+         "bio": "A global cultural icon known for her immense work ethic and dedication to her craft. She balances a powerful public presence with a private, protective nature over her family and personal values."},
+        {"name": "Kate Middleton",
+         "image_path": "/assets/images/celebs/isfj_kate.jpg",
+         "bio": "The Princess of Wales, admired for her quiet grace, sense of duty, and her focus on early childhood development and mental health support within the community."},
+        {"name": "Sadie Sink",
+         "image_path": "/assets/images/celebs/isfj_sadie.jpg",
+         "bio": "A rising star known for her profound emotional depth and dedicated work ethic. She approaches her craft with a quiet, observant intensity, embodying the reliable and grounded nature of a true protector."}
+      ]
+    },
+    "ESTJ": {
+      "title": "The Executive",
+      "ratio": "8.7%",
+      "description": "Excellent administrators, unsurpassed at managing things or people.",
+      "famous_people": [
+        {"name": "Emma Watson",
+         "image_path": "/assets/images/celebs/estj_emma.jpg",
+         "bio": "An actress and activist known for her organized and principled approach to her career and advocacy. She is a dedicated leader who uses her platform to drive systematic change and champion social order and equality."},
+        {"name": "Hillary Clinton",
+         "image_path": "/assets/images/celebs/estj_hillary.jpg",
+         "bio": "A seasoned political leader and former Secretary of State. She is known for her immense preparation, practical focus on policy and governance, and her belief in structured leadership to solve complex social issues."},
+        {"name": "Judge Judy",
+         "image_path": "/assets/images/celebs/estj_judy.jpg",
+         "bio": "A legendary family court judge celebrated for her directness, logic, and no-nonsense attitude. She embodies the ESTJ's respect for rules, personal accountability, and the clear application of justice."},
+        {"name": "Frank Sinatra",
+         "image_path": "/assets/images/celebs/estj_frank.jpg",
+         "bio": "A legendary singer and icon of the 'Chairman of the Board' style. He was known for his commanding presence, his perfectionism, and his ability to lead and organize large musical ensembles with authority."}
+      ]
+    },
+    "ESFJ": {
+      "title": "The Consul",
+      "ratio": "12.3%",
+      "description": "Extraordinarily caring, social and community-minded people.",
+      "famous_people": [
+        {"name": "Taylor Swift",
+         "image_path": "/assets/images/celebs/esfj_taylor.jpg",
+         "bio": "A global musical force and master songwriter who has built an unparalleled connection with her fans. She is known for her loyalty to her community and her ability to turn personal experiences into universal anthems."},
+        {"name": "Hugh Jackman",
+         "image_path": "/assets/images/celebs/esfj_hugh.jpg",
+         "bio": "A versatile and widely beloved performer whose kindness and professionalism are legendary. He balances high-octane roles with a warm, approachable personality that prioritizes people and positive energy."},
+        {"name": "Joe Biden",
+         "image_path": "/assets/images/celebs/esfj_joe.jpg",
+         "bio": "The 46th U.S. President, whose political career has been defined by his focus on empathy, consensus-building, and a steadfast belief in traditional civic values and interpersonal relationships."},
+        {"name": "Steve Harvey",
+         "image_path": "/assets/images/celebs/esfj_harvey.jpg",
+         "bio": "A world-famous entertainer and talk show host known for his charisma and common-sense wisdom. He thrives on connecting with people, often acting as a mentor and guardian of social and family traditions."}
+      ]
+    },
+    "ISTP": {
+      "title": "The Virtuoso",
+      "ratio": "5.4%",
+      "description": "Bold and practical experimenters, masters of all kinds of tools.",
+      "famous_people": [
+        {"name": "Michael Jordan",
+         "image_path": "/assets/images/celebs/istp_jordan.jpg",
+         "bio": "Widely regarded as the greatest basketball player of all time. He combined extreme technical mastery with an uncanny ability to stay present and decisive in high-pressure moments."},
+        {"name": "Tom Cruise",
+         "image_path": "/assets/images/celebs/istp_cruise.jpg",
+         "bio": "An action cinema legend famous for performing his own death-defying stunts. He embodies the ISTP's love for physical challenge, mechanical precision, and living life on the edge."},
+        {"name": "Ayrton Senna",
+         "image_path": "/assets/images/celebs/istp_senna.jpg",
+         "bio": "A legendary Formula 1 champion revered for his extraordinary technical skill and intense focus. He possessed a mystical connection with his car, pushing the limits of speed with a calm, stoic brilliance."},
+        {"name": "Scarlett Johansson",
+         "image_path": "/assets/images/celebs/istp_scarlett.jpg",
+         "bio": "A versatile actress known for her grounded and physically demanding roles. She brings a signature stoicism and practical intelligence to her characters, both in intimate dramas and high-octane action."}
+      ]
+    },
+    "ISFP": {
+      "title": "The Adventurer",
+      "ratio": "8.8%",
+      "description": "Flexible and charming artists, always ready to explore something new.",
+      "famous_people": [
+        {"name": "Michael Jackson",
+         "image_path": "/assets/images/celebs/isfp_jackson.jpg",
+         "bio": "The 'King of Pop' who redefined global music and dance. A transformative performer, he channeled his intense sensitivity and perfectionism into groundbreaking visual and auditory art."},
+        {"name": "Rihanna",
+         "image_path": "/assets/images/celebs/isfp_rihanna.jpg",
+         "bio": "A multifaceted artist and entrepreneur who seamlessly blends music, fashion, and beauty. She is celebrated for her bold aesthetic choices, independent spirit, and trend-setting authenticity."},
+        {"name": "Fayrouz",
+         "image_path": "/assets/images/celebs/isfp_fayrouz.jpg",
+         "bio": "A legendary musical icon and the soul of Arab song. Known for her ethereal voice and deeply private, stoic nature, she embodies the ISFP's artistic purity, transforming personal and national emotions into timeless, transcendent art."},
+        {"name": "Britney Spears",
+         "image_path": "/assets/images/celebs/isfp_spears.jpg",
+         "bio": "A pop culture icon known for her captivating stage presence and influential music. Her career is a testament to raw talent, emotional expression, and resilience in the face of public life."}
+      ]
+    },
+    "ESTP": {
+      "title": "The Entrepreneur",
+      "ratio": "4.3%",
+      "description": "Smart, energetic and very perceptive people, who enjoy living on the edge.",
+      "famous_people": [
+        {"name": "Donald Trump",
+         "image_path": "/assets/images/celebs/estp_trump.jpg",
+         "bio": "The 45th U.S. President and business mogul known for his bold, direct communication style and high-stakes decision-making. He thrives on negotiation, public spectacle, and a relentless drive for winning."},
+        {"name": "Kim Jong-un",
+         "image_path": "/assets/images/celebs/estp_kim.jpg",
+         "bio": "A supreme leader known for his absolute authority and decisive, often unpredictable actions. He embodies the raw, assertive energy of an ESTP who commands attention and maintains a firm grip on his environment."},
+        {"name": "Kylian Mbappé",
+         "image_path": "/assets/images/celebs/estp_mbappe.jpg",
+         "bio": "One of the world's most explosive football talents. Known for his lightning speed and fearlessness, he plays with a tactical intelligence and a 'live-in-the-moment' energy that keeps defenders on edge."},
+        {"name": "Angelina Jolie",
+         "image_path": "/assets/images/celebs/estp_jolie.jpg",
+         "bio": "A global superstar and humanitarian known for her daring spirit and intense screen presence. She is a woman of action, whether performing her own stunts or traveling to frontline zones to make a direct impact."}
+      ]
+    },
+    "ESFP": {
+      "title": "The Entertainer",
+      "ratio": "8.5%",
+      "description": "Spontaneous, energetic and enthusiastic people – life is never boring around them.",
+      "famous_people": [
+        {"name": "Marilyn Monroe",
+         "image_path": "/assets/images/celebs/esfp_marilyn.jpg",
+         "bio": "A timeless cultural icon who defined glamour and screen presence. She possessed a natural ability to captivate audiences, blending vulnerability with an irresistible, magnetic charm."},
+        {"name": "Cristiano Ronaldo",
+         "image_path": "/assets/images/celebs/esfp_ronaldo.jpg",
+         "bio": "One of the greatest athletes of all time, known for his extraordinary physical prowess and theatrical flair. He thrives under the spotlight, fueled by a relentless passion for performance and excellence."},
+        {"name": "Sherine Abdel-Wahab",
+         "image_path": "/assets/images/celebs/esfp_sherine.jpg",
+         "bio": "A powerful and emotive Egyptian vocal powerhouse. She is celebrated for her raw, spontaneous personality and her ability to connect deeply with millions through her authentic and heartfelt performances."},
+        {"name": "Leonardo DiCaprio",
+         "image_path": "/assets/images/celebs/esfp_dicaprio.jpg",
+         "bio": "A world-class actor known for his intense and immersive performances. He embodies the entertainer's spirit through his captivating charisma and a lifelong dedication to the art of cinematic storytelling."}
+      ]
+    }
+  }
+}
