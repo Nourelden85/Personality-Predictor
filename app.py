@@ -77,25 +77,15 @@ else:
     res_TF = models['TF'].predict(user_input)[0]
     res_JP = models['JP'].predict(user_input)[0]
 
-    if res_IE == 1:
-        res_IE = 'E'
-    else:
-        res_IE = 'I'
+    res_IE_proba = models['IE'].predict_proba(user_input)[0]
+    res_SN_proba = models['SN'].predict_proba(user_input)[0]
+    res_TF_proba = models['TF'].predict_proba(user_input)[0]
+    res_JP_proba = models['JP'].predict_proba(user_input)[0]
 
-    if res_SN == 1:
-        res_SN = 'S'
-    else:
-        res_SN = 'N'
-
-    if res_TF == 1:
-        res_TF = 'T'
-    else:
-        res_TF = 'F'
-
-    if res_JP == 1:
-        res_JP = 'J'
-    else:
-        res_JP = 'P'
+    res_IE = 'E' if res_IE == 1 else 'I'
+    res_SN = 'S' if res_SN == 1 else 'N'
+    res_TF = 'T' if res_TF == 1 else 'F'
+    res_JP = 'J' if res_JP == 1 else 'P'
 
     mbti_type = f"{res_IE}{res_SN}{res_TF}{res_JP}"
     st.header(f"Your Personality Type: {mbti_type}")

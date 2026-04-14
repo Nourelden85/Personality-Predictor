@@ -13,7 +13,7 @@ y_train = pd.read_csv(os.path.join(data_path, "y_train.csv"))
 def train_models(X_train, y_train):
     models = {}
     for trait in y_train.columns:
-        svm_classifier = SVC(random_state=42)
+        svm_classifier = SVC(random_state=42, probability=True)
         svm_classifier.fit(X_train, y_train[trait])
         models[trait] = svm_classifier
     return models
