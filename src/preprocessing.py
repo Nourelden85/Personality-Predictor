@@ -3,7 +3,7 @@ from sklearn.model_selection import train_test_split
 import os
 
 base_path = os.path.dirname(os.path.abspath(__file__))
-file_path = os.path.join(base_path, "..", "data", "cleaned", "cleaned_top40.csv")
+file_path = os.path.join(base_path, "..", "data", "cleaned", "cleaned_top50.csv")
 
 df = pd.read_csv(file_path)
 
