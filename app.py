@@ -22,7 +22,7 @@ def load_resources():
     with open(os.path.join(base_path, "data", "metadata", "mbti_data.json"), "r", encoding="utf-8") as f:
         mbti_db = json.load(f)
     
-    X_train = pd.read_csv(os.path.join(base_path, "data", "processed", "x_train.csv"), encoding="latin1")
+    X_train = pd.read_csv(os.path.join(base_path, "data", "processed", "x_train.csv"))
     questions_list = X_train.columns.tolist()
 
     return models, mbti_db, questions_list
