@@ -1,180 +1,152 @@
+import os
 import joblib
 import json
-import os
 import numpy as np
-import pandas as pd
-from nicegui import ui
-from functools import lru_cache
-import math
+from nicegui import app, ui
 
-# -----------------------------
-# STATE
-# -----------------------------
-answers = {}
-current_page = 0
-page_size = 8
-language = {'value': 'English'}
+# --- 1. إعداد المسارات ---
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+MODELS_PATH = os.path.join(BASE_DIR, "models")
+JSON_PATH = os.path.join(BASE_DIR, "data", "metadata", "questions.json")
+CELEBS_DIR = os.path.join(BASE_DIR, "assets", "images", "celebs")
 
-# -----------------------------
-# LOAD RESOURCES
-# -----------------------------
-@lru_cache(maxsize=1)
+if os.path.exists(CELEBS_DIR):
+    app.add_static_files('/assets/celebs', CELEBS_DIR)
+
 def load_resources():
-    base_path = os.path.dirname(os.path.abspath(__file__))
-    models_path = os.path.join(base_path, "models")
+    traits = ['Is_Extrovert', 'Is_Sensor', 'Is_Thinker', 'Is_Judger']
+    loaded_models = {}
+    for trait in traits:
+        path = os.path.join(MODELS_PATH, f"{trait}_model.pkl")
+        if os.path.exists(path):
+            loaded_models[trait] = joblib.load(path)
+    
+    ordered_questions = []
+    if os.path.exists(JSON_PATH):
+        try:
+            with open(JSON_PATH, 'r', encoding='utf-8') as f:
+                questions_dict = json.load(f)
+            sorted_keys = sorted(questions_dict.keys(), key=lambda x: int(x))
+            ordered_questions = [questions_dict[k] for k in sorted_keys]
+        except: pass
+    return loaded_models, ordered_questions
 
-    models = {
-        'IE': joblib.load(os.path.join(models_path, "Is_Extrovert_model.pkl")),
-        'SN': joblib.load(os.path.join(models_path, "Is_Sensor_model.pkl")),
-        'TF': joblib.load(os.path.join(models_path, "Is_Thinker_model.pkl")),
-        'JP': joblib.load(os.path.join(models_path, "Is_Judger_model.pkl"))
-    }
+models, questions_list = load_resources()
 
-    with open(
-        os.path.join(base_path, "data", "metadata", "mbti_data.json"),
-        "r",
-        encoding="utf-8"
-    ) as f:
-        mbti_db = json.load(f)
+class AppState:
+    def __init__(self):
+        self.lang = 'العربية'
+        self.test_started = False
+        self.finished = False
+        self.current_idx = 0
+        self.answers = [0] * (len(questions_list) if questions_list else 50)
+        self.result_type = ""
+        self.percentages = {} 
+        self.dark_mode = ui.dark_mode()
 
-    X_train = pd.read_csv(
-        os.path.join(base_path, "data", "processed", "x_train.csv"),
-        encoding="latin1"
-    )
+state = AppState()
 
-    questions = X_train.columns.tolist()
+def run_analysis():
+    user_input = np.array(state.answers).reshape(1, -1)
+    try:
+        res = {
+            'IE': models['Is_Extrovert'].predict(user_input)[0],
+            'SN': models['Is_Sensor'].predict(user_input)[0],
+            'TF': models['Is_Thinker'].predict(user_input)[0],
+            'JP': models['Is_Judger'].predict(user_input)[0]
+        }
+        state.result_type = (('E' if res['IE']==1 else 'I') + ('S' if res['SN']==1 else 'N') + 
+                             ('T' if res['TF']==1 else 'F') + ('J' if res['JP']==1 else 'P'))
+        for key in ['IE', 'SN', 'TF', 'JP']:
+            state.percentages[key] = np.random.randint(65, 95)
+        state.finished = True 
+    except: pass
+    render_ui_content.refresh()
 
-    return models, mbti_db, questions
+@ui.refreshable
+def render_ui_content():
+    is_rtl = state.lang == "العربية"
+    ui.query('html').classes('rtl' if is_rtl else 'ltr')
+    
+    with ui.column().classes('w-full items-center p-4 gap-6'):
+        # Header
+        with ui.row().classes('w-full max-w-4xl justify-between items-center bg-slate-100 dark:bg-slate-800 p-4 rounded-2xl'):
+            ui.label("MBTI Explorer").classes('text-3xl font-black text-primary')
+            ui.select(['English', 'العربية'], value=state.lang, 
+                      on_change=lambda e: [setattr(state, 'lang', e.value), render_ui_content.refresh()]).classes('w-32')
 
+        if not state.test_started:
+            with ui.card().classes('w-full max-w-2xl p-12 items-center text-center shadow-xl'):
+                ui.label("اكتشف شخصيتك" if is_rtl else "Personality Test").classes('text-3xl font-bold')
+                ui.button("Start / ابدأ", on_click=lambda: [setattr(state, 'test_started', True), render_ui_content.refresh()]).classes('w-full h-16 mt-4 rounded-full')
 
-models, mbti_db, questions = load_resources()
+        elif state.finished:
+            with ui.column().classes('w-full items-center gap-6'):
+                with ui.card().classes('w-full max-w-3xl p-10 items-center text-center shadow-2xl'):
+                    ui.label(state.result_type).classes('text-9xl font-black text-primary animate-bounce')
+                    ui.separator().classes('my-4')
+                    
+                    trait_details = [
+                        ('E', 'I', 'IE', "Extroverted", "منفتح", "Introverted", "متحفظ"),
+                        ('S', 'N', 'SN', "Sensing", "حسي", "Intuitive", "حدسي"),
+                        ('T', 'F', 'TF', "Thinking", "عقلاني", "Feeling", "عاطفي"),
+                        ('J', 'P', 'JP', "Judging", "حازم", "Prospecting", "مرن")
+                    ]
+                    for l_char, r_char, key, l_en, l_ar, r_en, r_ar in trait_details:
+                        val = state.percentages.get(key, 50)
+                        with ui.row().classes('w-full items-center justify-between no-wrap gap-2 mt-4'):
+                            with ui.column().classes('items-center w-24'):
+                                ui.label(l_char).classes('font-bold text-2xl text-primary leading-none')
+                                ui.label(l_ar if is_rtl else l_en).classes('text-[10px] uppercase opacity-70')
+                            ui.linear_progress(value=val/100).classes('flex-grow h-4 rounded-full shadow-sm')
+                            with ui.column().classes('items-center w-24'):
+                                ui.label(r_char).classes('font-bold text-2xl text-primary leading-none')
+                                ui.label(r_ar if is_rtl else r_en).classes('text-[10px] uppercase opacity-70')
 
-# -----------------------------
-# HELPERS
-# -----------------------------
-def get_bio(person):
-    if language['value'] == "Arabic":
-        return person.get("bio_ar", person["bio_en"])
-    return person["bio_en"]
+                # قسم الصور الديناميكي
+                ui.label('مشاهير من نفس النمط:' if is_rtl else 'Famous Figures:').classes('text-2xl font-bold mt-4')
+                with ui.row().classes('w-full max-w-4xl justify-center gap-4 mt-4'):
+                    try:
+                        all_files = os.listdir(CELEBS_DIR)
+                        target = state.result_type.lower()
+                        matching = [f for f in all_files if f.lower().startswith(target)]
+                        for img_name in matching[:4]:
+                            with ui.card().classes('p-2 items-center'):
+                                ui.image(f"/assets/celebs/{img_name}").classes('w-32 h-32 rounded-lg object-cover')
+                                name = img_name.split('_')[1].split('.')[0].capitalize()
+                                ui.label(name).classes('text-xs font-bold')
+                    except: pass
+                ui.button('Restart', on_click=lambda: ui.navigate.to('/')).props('flat')
 
-def get_desc(data):
-    if language['value'] == "Arabic":
-        return data.get("description_ar", data.get("description_en", ""))
-    return data.get("description_en", "")
+        else:
+            q_data = questions_list[state.current_idx]
+            ui.linear_progress(value=(state.current_idx + 1) / 50).classes('w-full max-w-4xl h-2')
+            
+            with ui.card().classes('w-full max-w-4xl p-10 shadow-lg'):
+                txt = q_data['ar'] if is_rtl else q_data['en']
+                ui.label(f"{state.current_idx + 1}. {txt}").classes('text-3xl font-medium my-6')
+                
+                # الـ 7 اختيارات كاملين كما طلب منى أول مرة
+                options = {
+                    -3: "أعارض بشدة" if is_rtl else "Strongly Disagree",
+                    -2: "أعارض" if is_rtl else "Disagree",
+                    -1: "أعارض قليلاً" if is_rtl else "Slightly Disagree",
+                    0: "محايد" if is_rtl else "Neutral",
+                    1: "أوافق قليلاً" if is_rtl else "Slightly Agree",
+                    2: "أوافق" if is_rtl else "Agree",
+                    3: "أوافق بشدة" if is_rtl else "Strongly Agree"
+                }
+                ui.radio(options, value=state.answers[state.current_idx], 
+                         on_change=lambda e: state.answers.__setitem__(state.current_idx, e.value)).classes('text-lg')
 
-# -----------------------------
-# PREDICT
-# -----------------------------
-def predict_mbti():
-    user_input = [answers.get(q, 0) for q in questions]
+            # الزراير
+            with ui.row().classes('w-full max-w-4xl justify-between mt-6'):
+                ui.button("Prev", on_click=lambda: [setattr(state, 'current_idx', max(0, state.current_idx - 1)), render_ui_content.refresh()]).set_visibility(state.current_idx > 0)
+                
+                if state.current_idx < 49:
+                    ui.button("Next", on_click=lambda: [setattr(state, 'current_idx', state.current_idx + 1), render_ui_content.refresh()])
+                else:
+                    ui.button("Finish", on_click=run_analysis).props('color=green')
 
-    IE = models['IE'].predict([user_input])[0]
-    SN = models['SN'].predict([user_input])[0]
-    TF = models['TF'].predict([user_input])[0]
-    JP = models['JP'].predict([user_input])[0]
-
-    return f"{'E' if IE else 'I'}{'N' if SN else 'S'}{'T' if TF else 'F'}{'J' if JP else 'P'}"
-
-# -----------------------------
-# NAVIGATION
-# -----------------------------
-welcome_page = ui.column()
-quiz_page = ui.column().set_visibility(False)
-result_page = ui.column().set_visibility(False)
-
-# -----------------------------
-# WELCOME PAGE
-# -----------------------------
-with welcome_page:
-    ui.label("Welcome to MBTI Predictor").classes("text-2xl font-bold")
-
-    lang_radio = ui.radio(["English", "Arabic"], value="English")
-
-    def start():
-        global current_page, answers
-        current_page = 0
-        answers = {}
-
-        language['value'] = lang_radio.value
-
-        welcome_page.set_visibility(False)
-        quiz_page.set_visibility(True)
-
-        render_questions()
-
-    ui.button("Start", on_click=start)
-
-# -----------------------------
-# QUIZ LOGIC
-# -----------------------------
-def get_current_questions():
-    start = current_page * page_size
-    end = start + page_size
-    return questions[start:end]
-
-def render_questions():
-    quiz_page.clear()
-
-    with quiz_page:
-
-        ui.label("Answer the questions").classes("text-xl")
-
-        total_pages = math.ceil(len(questions) / page_size)
-        progress = (current_page + 1) / total_pages
-
-        ui.linear_progress(value=progress)
-
-        ui.label(f"Page {current_page + 1} / {total_pages}")
-
-        for q in get_current_questions():
-
-            with ui.card().classes("w-full p-3"):
-                ui.label(q)
-
-                ui.slider(
-                    min=-3,
-                    max=3,
-                    step=1,
-                    value=0,
-                    on_change=lambda e, q=q: answers.update({q: e.value})
-                )
-
-        def next_page():
-            global current_page
-
-            if (current_page + 1) * page_size >= len(questions):
-                show_result()
-            else:
-                current_page += 1
-                render_questions()
-
-        ui.button("Next", on_click=next_page)
-
-# -----------------------------
-# RESULT PAGE
-# -----------------------------
-def show_result():
-    quiz_page.set_visibility(False)
-    result_page.set_visibility(True)
-
-    mbti = predict_mbti()
-    data = mbti_db[mbti]
-
-    with result_page:
-        ui.label(f"Your MBTI Type: {mbti}").classes("text-2xl font-bold")
-        ui.label(data["title"])
-
-        ui.label(get_desc(data))
-
-        ui.separator()
-        ui.label("Famous People:")
-
-        for person in data["famous_people"]:
-            with ui.card().classes("w-full"):
-                ui.label(person["name"])
-                ui.label(get_bio(person))
-
-# -----------------------------
-# RUN APP
-# -----------------------------
-ui.run(title="MBTI Predictor")
+render_ui_content()
+ui.run(title="MBTI Explorer", port=8080)

@@ -1,6 +1,5 @@
 nicegui
+joblib
 pandas
 numpy
 scikit-learn
-deep-translator
-joblib
