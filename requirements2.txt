@@ -1,0 +1,6 @@
+nicegui
+pandas
+numpy
+scikit-learn
+deep-translator
+joblib

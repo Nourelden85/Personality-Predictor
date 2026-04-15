@@ -69,62 +69,79 @@ else:
     if 'balloons_done' not in st.session_state:
         st.balloons()
         st.session_state.balloons_done = True
+    
     st.success("You have completed the questions! Analyzing your results...")
     
+    # 1. تجهيز المدخلات
     user_input = np.array(st.session_state.all_answers).reshape(1, -1)
-    res_IE = models['IE'].predict(user_input)[0]
-    res_SN = models['SN'].predict(user_input)[0]
-    res_TF = models['TF'].predict(user_input)[0]
-    res_JP = models['JP'].predict(user_input)[0]
+    results = {}
+    probs = {}
 
-    if res_IE == 1:
-        res_IE = 'E'
-    else:
-        res_IE = 'I'
+    traits_info = {
+        'IE': ('Introvert', 'Extrovert'),
+        'SN': ('Intuitive', 'Sensing'),
+        'TF': ('Feeling', 'Thinking'),
+        'JP': ('Perceiving', 'Judger')
+    }
 
-    if res_SN == 1:
-        res_SN = 'S'
-    else:
-        res_SN = 'N'
+    # 2. حساب التوقعات والنسب
+    for key, (label0, label1) in traits_info.items():
+        model = models[key]
+        prediction = model.predict(user_input)[0]
+        results[key] = label1 if prediction == 1 else label0
+        probs[key] = model.predict_proba(user_input)[0][1]
 
-    if res_TF == 1:
-        res_TF = 'T'
-    else:
-        res_TF = 'F'
-
-    if res_JP == 1:
-        res_JP = 'J'
-    else:
-        res_JP = 'P'
-
-    mbti_type = f"{res_IE}{res_SN}{res_TF}{res_JP}"
+    # 3. تكوين كود الـ MBTI
+    mbti_type = (
+        f"{'E' if results['IE']=='Extrovert' else 'I'}"
+        f"{'S' if results['SN']=='Sensing' else 'N'}"
+        f"{'T' if results['TF']=='Thinking' else 'F'}"
+        f"{'J' if results['JP']=='Judger' else 'P'}"
+    )
+    
     st.header(f"Your Personality Type: {mbti_type}")
-    
-    info = mbti_db['mbti_database'][mbti_type]
-    st.subheader(info['title'])
-    st.info(info['description'])
-    
+
+    # 4. عرض الـ Progress Bars
+    st.write("### Personality Traits Breakdown")
+    for key, (label0, label1) in traits_info.items():
+        score = probs[key]
+        percentage = score * 100
+        st.write(f"**{label0} vs {label1}**")
+        st.progress(score)
+        col_left, col_right = st.columns(2)
+        with col_left:
+            st.caption(f"{label0}: {100 - percentage:.1f}%")
+        with col_right:
+            st.caption(f"{label1}: {percentage:.1f}%")
+        st.write("")
+
     st.divider()
-    st.write("### Famous People with Similar Personality Types:")
     
-    cols = st.columns(2)
-    for idx, celeb in enumerate(info['famous_people']):
-        with cols[idx % 2]:
-            raw_path = celeb['image_path']
-            if raw_path.startswith("/"):
-                raw_path = raw_path[1:]
-            base_path = os.path.dirname(os.path.abspath(__file__))
-            full_image_path = os.path.join(base_path, raw_path)
+    # 5. عرض تفاصيل الشخصية والمشاهير (داخل شرط التأكد من وجود النوع)
+    if mbti_type in mbti_db['mbti_database']:
+        info = mbti_db['mbti_database'][mbti_type]
+        st.subheader(info['title'])
+        st.info(info['description'])
+        
+        st.write("### Famous People with Similar Personality Types:")
+        cols = st.columns(2)
+        for idx, celeb in enumerate(info['famous_people']):
+            with cols[idx % 2]:
+                raw_path = celeb['image_path'].lstrip("/") # تنظيف المسار
+                base_path = os.path.dirname(os.path.abspath(__file__))
+                full_image_path = os.path.join(base_path, raw_path)
 
-            if os.path.exists(full_image_path):
-                st.image(full_image_path, width="stretch")
-            else:
-                st.warning(f"Image not found: {celeb['name']}")
-                st.write(f"Check path: {full_image_path}")
+                if os.path.exists(full_image_path):
+                    st.image(full_image_path, use_container_width=True) # التعديل الجديد لـ streamlit
+                else:
+                    st.warning(f"Image not found: {celeb['name']}")
                 
-            st.write(f"**{celeb['name']}**")
-            st.caption(celeb['bio'])
+                st.write(f"**{celeb['name']}**")
+                st.caption(celeb['bio'])
+    else:
+        st.error(f"Personality type {mbti_type} data is missing from the database.")
 
+    # 6. زر إعادة الاختبار
     if st.button("Restart Test 🔄"):
         st.session_state.page = 0
         st.session_state.all_answers = [0] * len(questions)
