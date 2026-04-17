@@ -205,4 +205,4 @@ def render_ui_content():
                     ui.button(texts["finish"], on_click=run_analysis).props('color=green')
 
 render_ui_content()
-ui.run(port=7860, title="MBTI Explorer", favicon="🚀")
+ui.run(host='0.0.0.0', port=7860, title="MBTI Explorer", favicon="🚀")
