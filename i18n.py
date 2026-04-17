@@ -1,7 +1,9 @@
 UI_TEXTS = {
     "English": {
+        "dir": "ltr",
         "title": "MBTI Personality Predictor",
         "choose": "Choose your answer:",
+        "question_of": "Question {} of {}",
         "start": "Start Test 🚀",
         "next": "Next Page ➡️",
         "previous": "Previous Page ⬅️",
@@ -11,7 +13,7 @@ UI_TEXTS = {
         "restart": "Restart 🔄",
         "lang_key": "en",
         "description": "Discover your MBTI personality type and see which famous personalities share your traits!",
-        "famous_people": "Famous People with Similar Personality Type:",
+        "famous_people": "Famous People with Similar Personality Type",
         "complete": "You have completed the questions! Analyzing your results...",
         "your_type": "Your Personality Type",
         "traits_title": "Traits Analysis",
@@ -23,8 +25,10 @@ UI_TEXTS = {
         }
     },
     "العربية": {
+        "dir": "rtl",
         "title": "محلل الشخصية MBTI",
         "choose": "اختر إجابتك:",
+        "question_of": "السؤال {} من {}",
         "start": "ابدأ الاختبار 🚀",
         "next": "الصفحة التالية ⬅️",
         "previous": "الصفحة السابقة ➡️",
@@ -34,7 +38,7 @@ UI_TEXTS = {
         "restart": "إعادة الاختبار 🔄",
         "lang_key": "ar",
         "description": "اكتشف نوع شخصيتك MBTI وشاهد أي الشخصيات الشهيرة تشترك في صفاتك!",
-        "famous_people": "الشخصيات الشهيرة ذات نمط الشخصية المشابه:",
+        "famous_people": "الشخصيات الشهيرة ذات نمط الشخصية المشابه",
         "complete": "لقد أكملت الأسئلة! جاري تحليل نتائجك...",
         "your_type": "نوع شخصيتك هو",
         "traits_title": "تحليل السمات",
