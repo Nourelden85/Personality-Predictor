@@ -163,8 +163,8 @@ def render_ui_content():
                                 ui.label(right_name).classes('text-[10px] uppercase font-bold opacity-70')
                 personality = mbti_db.get(state.result_type, {})
                 ui.label(personality.get("title","")).classes("text-3xl font-bold")
-                ui.label(personality.get("description","")).classes("text-center opacity-80 max-w-2xl")
-                ui.label(f'{texts["population"]} {personality.get("ratio","")}')
+                ui.label(personality.get("description","")).classes("text-xl text-center opacity-90 max-w-3xl leading-relaxed")
+                ui.label(f'{texts["population"]} {personality.get("ratio","")}').classes("text-lg font-semibold mt-2")
                 ui.label(texts["famous_people"]).classes('text-2xl font-bold mt-8')
 
                 famous_people = personality.get("famous_people", [])
@@ -174,14 +174,18 @@ def render_ui_content():
                             ui.image(person["image_path"]).classes('w-full object-cover rounded-xl')
                             ui.label(person["name"]).classes('text-lg font-bold mt-3')
                             ui.label(person["bio"]).classes('text-sm opacity-80 mt-2')
-                ui.button(texts["restart"], on_click=restart).props('flat')
-
+                ui.button(texts["restart"], on_click=restart)\
+                .classes(f'''
+                 px-8 py-3 text-lg font-bold rounded-xl shadow-lg transition
+                 { "bg-blue-900 hover:bg-blue-800 text-white" if state.dark_mode.value 
+                 else "bg-blue-300 hover:bg-blue-400 text-black" }
+                ''')
         else:
             q_data = questions_list[state.current_idx]
             progress = (state.current_idx + 1) / len(questions_list)
             
             with ui.column().classes('w-full max-w-4xl items-center gap-6 mt-10'):
-                ui.label(texts['question_of'].format(ar_num(state.current_idx + 1, state.lang), ar_num(len(questions_list), state.lang))).classes('font-bold opacity-60')
+                ui.label(texts['question_of'].format(ar_num(state.current_idx + 1, state.lang), ar_num(len(questions_list), state.lang))).classes('text-xl font-bold opacity-70')
                 ui.linear_progress(value=progress, show_value=False).classes('w-full h-3 rounded-full shadow-sm')
 
                 with ui.card().classes('w-full max-w-4xl p-10 shadow-lg'):
@@ -194,11 +198,16 @@ def render_ui_content():
                         for value, text in zip(option_values, texts["choices"])
                     }
                     ui.radio(options, value=state.answers[state.current_idx], 
-                            on_change=lambda e: state.answers.__setitem__(state.current_idx, e.value)).classes('text-lg gap-3')
+                            on_change=lambda e: state.answers.__setitem__(state.current_idx, e.value)).classes('text-2xl gap-3')
 
             with ui.row().classes('w-full max-w-4xl justify-between mt-6'):
                 ui.button(texts["previous"], on_click=lambda: [setattr(state, 'current_idx', max(0, state.current_idx - 1)), render_ui_content.refresh()]).set_visibility(state.current_idx > 0)
                 
+                #skip button for last 25 questions 
+                ui.button(texts["skip"], on_click=run_analysis)\
+                .props('color=orange')\
+                .set_visibility(state.current_idx >= 24)
+
                 if state.current_idx < (len(questions_list) - 1):
                     ui.button(texts["next"], on_click=lambda: [setattr(state, 'current_idx', state.current_idx + 1), render_ui_content.refresh()])
                 else:
