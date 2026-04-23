@@ -72,23 +72,23 @@ state = AppState()
 def run_analysis():
     user_input = np.array(state.answers).reshape(1, -1)
     try:
-        res = {
+        predictions = {
             'IE': models['Is_Extrovert'].predict(user_input)[0],
             'SN': models['Is_Sensor'].predict(user_input)[0],
             'TF': models['Is_Thinker'].predict(user_input)[0],
             'JP': models['Is_Judger'].predict(user_input)[0]
         }
 
-        res_proba = {
+        probabilities = {
             'IE': models['Is_Extrovert'].predict_proba(user_input)[0],
             'SN': models['Is_Sensor'].predict_proba(user_input)[0],
             'TF': models['Is_Thinker'].predict_proba(user_input)[0],
             'JP': models['Is_Judger'].predict_proba(user_input)[0]
         }
-        state.result_type = (('E' if res['IE'] == 1 else 'I') + ('S' if res['SN'] == 1 else 'N') + 
-                             ('T' if res['TF'] == 1 else 'F') + ('J' if res['JP'] == 1 else 'P'))
-        for key in res_proba.keys():
-            state.percentages[key] = round(res_proba[key][1] * 100)
+        state.result_type = (('E' if predictions['IE'] == 1 else 'I') + ('S' if predictions['SN'] == 1 else 'N') + 
+                             ('T' if predictions['TF'] == 1 else 'F') + ('J' if predictions['JP'] == 1 else 'P'))
+        for key in probabilities.keys():
+            state.percentages[key] = round(probabilities[key][1] * 100)
         state.finished = True 
     except Exception as e:
         ui.notify(str(e), color='red')
