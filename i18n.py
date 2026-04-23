@@ -13,7 +13,6 @@ UI_TEXTS = {
         "lang_key": "en",
         "description": "Discover your MBTI personality type and see which famous personalities share your traits!",
         "famous_people": "Famous People with Similar Personality Type",
-        "your_type": "Your Personality Type",
         "population": "Population:",
         "traits_title": "Traits Analysis",
         "traits_map": {
@@ -59,7 +58,6 @@ UI_TEXTS = {
         "lang_key": "ar",
         "description": "اكتشف نوع شخصيتك MBTI وشاهد أي الشخصيات الشهيرة تشترك في صفاتك!",
         "famous_people": "الشخصيات الشهيرة ذات نمط الشخصية المشابه",
-        "your_type": "نوع شخصيتك هو",
         "population": "نسبة الانتشار:",
         "traits_title": "تحليل السمات",
         "traits_map": {
