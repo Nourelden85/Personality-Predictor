@@ -121,8 +121,27 @@ def render_ui_content():
 
         if not state.test_started:
             with ui.card().classes('w-full max-w-2xl p-12 items-center text-center shadow-xl'):
-                ui.label(texts["title"]).classes('text-3xl font-bold')
+                ui.label("🧠").classes("text-6xl")
+                ui.label(texts["title"]).classes('text-4xl font-black mt-2')
+                ui.label(texts["description"]).classes('text-lg opacity-70 mt-2')
                 ui.button(texts["start"], on_click=lambda: [setattr(state, 'test_started', True), render_ui_content.refresh()]).classes('w-full h-16 mt-4 rounded-full')
+
+            with ui.column().classes('w-full max-w-2xl mt-8 gap-4'):
+                with ui.expansion(texts['about_test'], icon='info').classes('w-full bg-slate-100 dark:bg-slate-800 rounded-xl shadow-sm p-2 font-bold'):
+                    ui.label(texts['about_test_desc']).classes('text-md opacity-80 leading-relaxed font-normal mt-2')
+                    ui.label(texts['test_tips']).classes('text-md font-bold text-blue-600 mt-3')
+                with ui.expansion(texts['comparison_title'], icon='compare_arrows').classes('w-full bg-slate-100 dark:bg-slate-800 rounded-xl shadow-sm'):
+                    with ui.column().classes('w-full p-4 gap-6'):
+                        for key, data in texts['traits_info'].items():
+                            with ui.row().classes('w-full items-start justify-between border-b pb-4 border-slate-200 dark:border-slate-700 last:border-0'):
+                                with ui.column().classes('w-[45%] items-center text-center'):
+                                    ui.label(data['left']['title']).classes('font-bold text-blue-600 dark:text-blue-400')
+                                    ui.label(data['left']['desc']).classes('text-xs opacity-80')
+                                ui.label("VS").classes('font-black text-slate-400 self-center')
+
+                                with ui.column().classes('w-[45%] items-center text-center'):
+                                    ui.label(data['right']['title']).classes('font-bold text-indigo-600 dark:text-indigo-400')
+                                    ui.label(data['right']['desc']).classes('text-xs opacity-80')
 
         elif state.finished:
             with ui.column().classes('w-full items-center gap-6'):
@@ -190,7 +209,7 @@ def render_ui_content():
 
                 with ui.card().classes('w-full max-w-4xl p-10 shadow-lg'):
                     txt = q_data[texts["lang_key"]]
-                    ui.label(f"{ar_num(state.current_idx + 1, state.lang)}. {txt}").classes('text-3xl font-medium my-6')
+                    ui.label(f"{txt}").classes('text-3xl font-semibold leading-relaxed')
                     option_values = [-3, -2, -1, 0, 1, 2, 3]
 
                     options = {
@@ -198,15 +217,16 @@ def render_ui_content():
                         for value, text in zip(option_values, texts["choices"])
                     }
                     ui.radio(options, value=state.answers[state.current_idx], 
-                            on_change=lambda e: state.answers.__setitem__(state.current_idx, e.value)).classes('text-2xl gap-3')
+                            on_change=lambda e: state.answers.__setitem__(state.current_idx, e.value)).classes('text-xl gap-6 justify-center font-bold')
 
             with ui.row().classes('w-full max-w-4xl justify-between mt-6'):
                 ui.button(texts["previous"], on_click=lambda: [setattr(state, 'current_idx', max(0, state.current_idx - 1)), render_ui_content.refresh()]).set_visibility(state.current_idx > 0)
-                
-                #skip button for last 25 questions 
+                ui.space()
+                # Skip button for last 25 questions 
                 ui.button(texts["skip"], on_click=run_analysis)\
                 .props('color=orange')\
                 .set_visibility(state.current_idx >= 24)
+                ui.space()
 
                 if state.current_idx < (len(questions_list) - 1):
                     ui.button(texts["next"], on_click=lambda: [setattr(state, 'current_idx', state.current_idx + 1), render_ui_content.refresh()])
